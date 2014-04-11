@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+#
+# This script is used to find all of the planbox story numbers from the git log
+# For lesson-player it is dependent on lesson-player being in the directory name for the repo
+
+require File.expand_path("./../../lib/planbox.rb", __FILE__)
+require File.expand_path("./../../lib/github.rb", __FILE__)
+
+STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
+# MAIN
+Dir.chdir "/git/apangea"
+prod_branch="production/master"
+if Dir.pwd.include? "lesson-player"
+        `git fetch origin`
+        prod_branch="origin/master"
+else
+        `git fetch production`
+end
+list= `git log #{prod_branch}..`
+pb_story_ids = list.scan(STORY_REGEX).flatten.uniq # find everything between [ and ]
+release_notes = Planbox.get_release_notes pb_story_ids
+cmd = "echo \"#{release_notes}\" | mvim -R - &"
+`#{cmd}`

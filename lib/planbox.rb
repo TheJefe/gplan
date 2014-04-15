@@ -1,7 +1,8 @@
 require 'httparty'
-require 'pry'
+
 EMAIL=ENV['PLANBOX_EMAIL']
 TOKEN=ENV['PLANBOX_TOKEN']
+BASE_URL="https://www.planbox.com/api"
 
 module Planbox
   include HTTParty
@@ -21,14 +22,14 @@ module Planbox
   end
 
   def self.login
-    response = self.post("https://www.planbox.com/api/login", { :body => {:email => EMAIL, :password => TOKEN}})
+    response = self.post("#{BASE_URL}/login", { :body => {:email => EMAIL, :password => TOKEN}})
     cookie = HTTParty::CookieHash.new
     cookie.add_cookies(response.headers["set-cookie"])
     self.cookies(cookie)
   end
 
   def self.get_story(story_id)
-    story_response = self.post('https://www.planbox.com/api/get_story', { :body => { :story_id => story_id}})
+    story_response = self.post("#{BASE_URL}/get_story", { :body => { :story_id => story_id}})
     return story_response.parsed_response["content"] unless story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
     {"id" => story_id, "name" => "story not found in planbox"}
   end

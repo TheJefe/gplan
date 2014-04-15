@@ -20,8 +20,9 @@ This will be different on every OS, but for OSX, I did this...
     sudo echo "
     #for planbox
     export PLANBOX_EMAIL=<EMAIL_ADDRESS>
-    export PLANBOX_TOKEN=<PASSWORD>" >> /etc/profile
-
+    export PLANBOX_TOKEN=<PASSWORD>
+    export GITHUB_EMAIL=<GITHUB_EMAIL_ADDRESS>
+    export GITHUB_TOKEN=<GITHUB_TOKEN>" >> /etc/profile
 
 ## Usage
 

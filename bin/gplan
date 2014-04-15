@@ -22,5 +22,6 @@ end
 list= `git log #{prod_branch}..`
 pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
 gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
+gh_release_notes = Github.get_release_notes gh_pr_ids
 release_notes = Planbox.get_release_notes pb_story_ids
 puts release_notes

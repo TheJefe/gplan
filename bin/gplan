@@ -21,5 +21,4 @@ end
 list= `git log #{prod_branch}..`
 pb_story_ids = list.scan(STORY_REGEX).flatten.uniq # find everything between [ and ]
 release_notes = Planbox.get_release_notes pb_story_ids
-cmd = "echo \"#{release_notes}\" | mvim -R - &"
-`#{cmd}`
+puts release_notes

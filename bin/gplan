@@ -3,12 +3,14 @@
 # This script is used to find all of the planbox story numbers from the git log
 # For lesson-player it is dependent on lesson-player being in the directory name for the repo
 
-require File.expand_path("./../../lib/planbox.rb", __FILE__)
-require File.expand_path("./../../lib/github.rb", __FILE__)
+require 'pathname'
+bin_path = Pathname.new(__FILE__).realpath
+$:.unshift File.expand_path('../../lib', bin_path)
+require 'planbox'
+require 'github'
 
 STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
 # MAIN
-Dir.chdir "/git/apangea"
 prod_branch="production/master"
 if Dir.pwd.include? "lesson-player"
         `git fetch origin`

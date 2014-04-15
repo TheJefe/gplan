@@ -13,6 +13,16 @@ or to install globally
 
     rvm @global do gem install gplan-0.0.0.gem
 
+# Create environment variables
+
+This will be different on every OS, but for OSX, I did this...
+
+    sudo echo "
+    #for planbox
+    export PLANBOX_EMAIL=<EMAIL_ADDRESS>
+    export PLANBOX_TOKEN=<PASSWORD>" >> /etc/profile
+
+
 ## Usage
 
 Note that we make an assumption that your git remote and branch to compare to is production/master

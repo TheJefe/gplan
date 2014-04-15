@@ -9,7 +9,8 @@ $:.unshift File.expand_path('../../lib', bin_path)
 require 'planbox'
 require 'github'
 
-STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
+PB_STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
+GH_PR_REGEX=/Merge pull request #(\d*)/i
 # MAIN
 prod_branch="production/master"
 if Dir.pwd.include? "lesson-player"
@@ -19,6 +20,7 @@ else
         `git fetch production`
 end
 list= `git log #{prod_branch}..`
-pb_story_ids = list.scan(STORY_REGEX).flatten.uniq # find everything between [ and ]
+pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
+gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 release_notes = Planbox.get_release_notes pb_story_ids
 puts release_notes

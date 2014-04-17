@@ -1,8 +1,8 @@
 require 'httparty'
 
-EMAIL=ENV['GITHUB_EMAIL']
-TOKEN=ENV['GITHUB_TOKEN']
-BASE_URL="https://api.github.com"
+GITHUB_EMAIL=ENV['GITHUB_EMAIL']
+GITHUB_TOKEN=ENV['GITHUB_TOKEN']
+GITHUB_BASE_URL="https://api.github.com"
 
 module Github
   include HTTParty
@@ -11,7 +11,7 @@ module Github
   @app_name
 
   def self.check_environment
-    if EMAIL == nil || TOKEN == nil
+    if GITHUB_EMAIL == nil || GITHUB_TOKEN == nil
       raise "environment variables not set. Please check that you have the following set...\
       \nGITHUB_EMAIL\nGITHUB_TOKEN"
     end
@@ -20,8 +20,8 @@ module Github
   def self.set_repo_info
     cmd = "git remote -v |grep origin"
     repo_info = `#{cmd}`
-    @repo_name = repo_info.scan(/\:(.*)\//).uniq.flatten
-    @app_name = repo_info.scan(/\/(.*)\.git/).uniq.flatten
+    @repo_name = repo_info.scan(/\:(.*)\//).uniq.flatten.first
+    @app_name = repo_info.scan(/\/(.*)\.git/).uniq.flatten.first
   end
 
   def self.get_release_notes gh_pr_ids
@@ -30,9 +30,12 @@ module Github
     result_string = format stories
   end
 
-  def self.get_story(story_id)
+  def self.get_story(pr_id)
     set_repo_info
-    story_response = self.post("#{BASE_URL}/repos/#{@repo_name}/#{@app_name}?access_token=#{TOKEN}", { :body => { :story_id => story_id}})
+    story_response = self.get("#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/pulls/#{pr_id}?access_token=#{GITHUB_TOKEN}",
+                               {
+                                 :headers => { 'User-Agent' => 'jkoenig311', 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+                               })
     return story_response.parsed_response unless story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
     {"id" => story_id, "name" => "PR not found in github"}
   end
@@ -50,9 +53,8 @@ module Github
   def self.format(stories)
     result_string = ""
     stories.each do |story|
-      result_string += "#{story['id']}:"
-      result_string += "#{story['status']}: "
-      result_string += "#{story['name']}"
+      result_string += "#{story['number']}:"
+      result_string += "#{story['title']}"
       result_string += "\n"
     end
 

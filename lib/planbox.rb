@@ -15,10 +15,13 @@ module Planbox
   end
 
   def self.get_release_notes pb_story_ids
-    check_environment
-    #cleaned_results = clean pb_story_ids
-    stories = get_stories pb_story_ids
+    stories = get_release_notes_array pb_story_ids
     result_string = format stories
+  end
+
+  def self.get_release_notes_array pb_story_ids
+    check_environment
+    stories = get_stories pb_story_ids
   end
 
   def self.login
@@ -56,20 +59,6 @@ module Planbox
 
     # clean up any troublesome chars
     result_string.gsub!('`', ' ') || result_string
-  end
-
-  # cleans up the results
-  # depricated
-  def self.clean( results )
-    results.each do |i|
-      i.gsub!('fixes', '') || i
-      i.gsub!('Fixes', '') || i
-      i.gsub!(' ', '') || i
-      i.gsub!('[', '') || i
-      i.gsub!('#', '') || i
-      i.gsub!(']', '') || i
-    end
-    results.uniq
   end
 
 end

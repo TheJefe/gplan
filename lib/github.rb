@@ -25,9 +25,13 @@ module Github
   end
 
   def self.get_release_notes gh_pr_ids
-    check_environment
-    stories = get_stories gh_pr_ids
+    stories = get_release_notes_array gh_pr_ids
     result_string = format stories
+  end
+
+  def self.get_release_notes_array gh_pr_ids
+    check_environment
+    get_stories gh_pr_ids
   end
 
   def self.get_story(pr_id)

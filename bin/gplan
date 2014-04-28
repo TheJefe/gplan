@@ -11,20 +11,70 @@ require 'github'
 
 PB_STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
 GH_PR_REGEX=/Merge pull request #(\d*)/i
+
+@gh_release_array = []
+@pb_release_array = []
+@combined = []
+
+def combine_results
+  @pb_release_array.each do |pb_story|
+    @gh_release_array.each do |gh_pr|
+      if gh_pr['pb_id'] and gh_pr['pb_id'].to_i == pb_story["id"]
+        gh_pr.delete('id') # doing this so we don't overide the pb id
+        pb_story = pb_story.merge gh_pr
+        @gh_release_array.delete gh_pr
+        break
+      end
+    end
+    @combined <<  pb_story
+  end
+
+  # add the remaining unmatched PRs
+  @gh_release_array.each do |gh_pr|
+    @combined <<  gh_pr
+  end
+end
+
+# used to pull story numbers from pull request titles
+def pull_pb_numbers_from_prs
+  @gh_release_array.each do |gh_pr|
+    pb_ids = gh_pr['title'].scan(PB_STORY_REGEX).flatten.uniq
+      if !pb_ids.empty?
+        gh_pr.merge!({"pb_id" => pb_ids.first.to_i}) # making an assumption that there is only 1 pb story number
+      end
+  end
+end
+
+def print
+  end_of_pbs = false
+  release_notes = "ID:STATUS:TITLE:PR:TITLE\n"
+  @combined.each do |story|
+    if !end_of_pbs and story['name'].nil?
+      end_of_pbs = true
+      release_notes += "\n---- Unmatched PRs ----\n\n"
+      release_notes += "PR:TITLE\n"
+    end
+    line = ""
+    line += "#{story['id']}:#{story['status']}:#{story['name']}" unless end_of_pbs
+    line += ":#{story['number']}:#{story['title']}" unless story['number'].nil?
+    release_notes += line + "\n"
+  end
+  puts release_notes
+end
+
 # MAIN
 prod_branch="production/master"
 if Dir.pwd.include? "lesson-player"
-        `git fetch origin`
-        prod_branch="origin/master"
+  `git fetch origin`
+  prod_branch="origin/master"
 else
-        `git fetch production`
+  `git fetch production`
 end
 list= `git log #{prod_branch}..`
 pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
 gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
-gh_release_notes = Github.get_release_notes gh_pr_ids
-release_notes = Planbox.get_release_notes pb_story_ids
-puts "-----Planbox-----"
-puts release_notes
-puts "-----GitHub-----"
-puts gh_release_notes
+@gh_release_array = Github.get_release_notes_array gh_pr_ids
+@pb_release_array = Planbox.get_release_notes_array pb_story_ids
+pull_pb_numbers_from_prs
+combine_results
+print

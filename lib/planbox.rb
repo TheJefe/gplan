@@ -33,8 +33,21 @@ module Planbox
 
   def self.get_story(story_id)
     story_response = self.post("#{PLANBOX_BASE_URL}/get_story", { :body => { :story_id => story_id}})
-    return story_response.parsed_response["content"] unless story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
-    {"id" => story_id, "name" => "story not found in planbox"}
+
+    if story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
+      return {"id" => story_id, "name" => "story not found in planbox"}
+    end
+
+    story = story_response.parsed_response["content"]
+    project_response = self.class.post('https://www.planbox.com/api/get_project', { :body => { :project_id => story['project_id'], :product_id => story['product_id']}})
+    project = project_response.parsed_response["content"]
+    project_alias = project["alias"]
+    project_name = project["name"]
+
+    story = story.merge({"project_name" => project_name})
+    story = story.merge({"project_alias" => project_alias})
+
+    story
   end
 
   def self.get_stories(array_of_pb_ids)

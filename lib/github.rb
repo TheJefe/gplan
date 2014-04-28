@@ -1,6 +1,6 @@
 require 'httparty'
 
-GITHUB_EMAIL=ENV['GITHUB_EMAIL']
+GITHUB_USERNAME=ENV['GITHUB_USERNAME']
 GITHUB_TOKEN=ENV['GITHUB_TOKEN']
 GITHUB_BASE_URL="https://api.github.com"
 
@@ -11,9 +11,9 @@ module Github
   @app_name
 
   def self.check_environment
-    if GITHUB_EMAIL == nil || GITHUB_TOKEN == nil
+    if GITHUB_USERNAME == nil || GITHUB_TOKEN == nil
       raise "environment variables not set. Please check that you have the following set...\
-      \nGITHUB_EMAIL\nGITHUB_TOKEN"
+      \nGITHUB_USERNAME\nGITHUB_TOKEN"
     end
   end
 
@@ -38,7 +38,7 @@ module Github
     set_repo_info
     story_response = self.get("#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/pulls/#{pr_id}?access_token=#{GITHUB_TOKEN}",
                                {
-                                 :headers => { 'User-Agent' => 'jkoenig311', 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
+                                 :headers => { 'User-Agent' => GITHUB_USERNAME, 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
                                })
     return story_response.parsed_response unless story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
     {"id" => story_id, "name" => "PR not found in github"}

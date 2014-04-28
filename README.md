@@ -21,7 +21,7 @@ This will be different on every OS, but for OSX, I did this...
     #for planbox
     export PLANBOX_EMAIL=<EMAIL_ADDRESS>
     export PLANBOX_TOKEN=<PASSWORD>
-    export GITHUB_EMAIL=<GITHUB_EMAIL_ADDRESS>
+    export GITHUB_USERNAME=<GITHUB_USERNAME>
     export GITHUB_TOKEN=<GITHUB_TOKEN>" >> /etc/profile
 
 ## Usage

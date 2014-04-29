@@ -39,7 +39,7 @@ module Planbox
     end
 
     story = story_response.parsed_response["content"]
-    project_response = self.class.post('https://www.planbox.com/api/get_project', { :body => { :project_id => story['project_id'], :product_id => story['product_id']}})
+    project_response = self.post("#{PLANBOX_BASE_URL}/get_project", { :body => { :project_id => story['project_id'], :product_id => story['product_id']}})
     project = project_response.parsed_response["content"]
     project_alias = project["alias"]
     project_name = project["name"]

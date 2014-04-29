@@ -47,7 +47,7 @@ end
 
 def print
   end_of_pbs = false
-  release_notes = "ID:STATUS:TITLE:PR:TITLE\n"
+  release_notes = "ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE\n"
   @combined.each do |story|
     if !end_of_pbs and story['name'].nil?
       end_of_pbs = true
@@ -55,7 +55,7 @@ def print
       release_notes += "PR:TITLE\n"
     end
     line = ""
-    line += "#{story['id']}:#{story['status']}:#{story['name']}" unless end_of_pbs
+    line += "#{story['id']}:#{story['status']}:#{story['name']}:#{story['project_name']}:#{story['project_alias']}" unless end_of_pbs
     line += ":#{story['number']}:#{story['title']}" unless story['number'].nil?
     release_notes += line + "\n"
   end

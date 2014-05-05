@@ -64,7 +64,7 @@ end
 
 # MAIN
 prod_branch="production/master"
-if Dir.pwd.include? "lesson-player"
+if (Dir.pwd =~ /lesson[- _]?player/i) != nil
   `git fetch origin`
   prod_branch="origin/master"
 else

@@ -25,10 +25,8 @@ module Planbox
   end
 
   def self.login
-    response = self.post("#{PLANBOX_BASE_URL}/login", { :body => {:email => PLANBOX_EMAIL, :password => PLANBOX_TOKEN}})
-    cookie = HTTParty::CookieHash.new
-    cookie.add_cookies(response.headers["set-cookie"])
-    self.cookies(cookie)
+    response = self.post("#{PLANBOX_BASE_URL}/auth", { :body => {:email => PLANBOX_EMAIL, :password => PLANBOX_TOKEN}})
+    self.basic_auth response['content']['access_token'], ""
   end
 
   def self.get_story(story_id)

@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/gplan.svg)](http://badge.fury.io/rb/gplan)
+
 ## What is GPlan?
 
 GPlan started out as a simple ruby script that parsed out ticket numbers

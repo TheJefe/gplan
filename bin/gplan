@@ -62,15 +62,25 @@ def print
   puts release_notes
 end
 
-# MAIN
-prod_branch="production/master"
-if (Dir.pwd =~ /lesson[- _]?player/i) != nil
-  `git fetch origin`
-  prod_branch="origin/master"
-else
-  `git fetch production`
+def setup_repository
+  conf_file =Dir.pwd+"/.gplan"
+  if File.exists?(conf_file)
+    File.open(conf_file, "r") do |f|
+      #target should be repository/branch
+      @target = f.each_line.first.chomp
+    end
+  end
+  # Set the default branch if one is not set
+  @target = "production/master" unless @target
+  @repo = @target.split("/").first
 end
-list= `git log #{prod_branch}..`
+
+# MAIN
+
+setup_repository
+`git fetch #{@repo}`
+list= `git log #{@target}..`
+
 pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
 gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 @gh_release_array = Github.get_release_notes_array gh_pr_ids

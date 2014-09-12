@@ -24,9 +24,13 @@ This will be different on every OS, but for OSX, I did this...
     export GITHUB_USERNAME=<GITHUB_USERNAME>
     export GITHUB_TOKEN=<GITHUB_TOKEN>" >> /etc/profile
 
-## Usage
+# Configure Project
 
-Note that we make an assumption that your git remote and branch to compare to is production/master
+For any project you want to use this for, you will need to tell gplan what repository/branch to compare your current branch to.  To do this, create a `.gplan` file in the repository's root with `<repo_name>/<branch_name>`. If one isn't set, a default of `production/master` is used.
+
+    echo "origin/master" > .gplan
+
+## Usage
 
 1. cd to git project
 2. checkout the branch that you wish to get release notes for
@@ -34,5 +38,10 @@ Note that we make an assumption that your git remote and branch to compare to is
 4. you should now get a list of the pattern
 
 ```
-<STORY_ID>:<STATUS>:<TITLE>
+ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE
+...
+---- Unmatched PRs ----
+...
 ```
+
+Note: unmatched PRs are github pull requests that doesn't have a matching planbox story

@@ -13,4 +13,5 @@ Gem::Specification.new do |s|
   s.executables      = ["gplan"]
   s.files        = Dir.glob("bin/**/*") + Dir.glob("lib/**/*")
   s.require_path = 'lib'
+  s.add_runtime_dependency('httparty',    "~> 0.13.0")
 end

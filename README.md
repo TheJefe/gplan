@@ -27,6 +27,10 @@ For any project you want to use this for, you will need to tell gplan what repos
 
     echo "origin/master" > .gplan
 
+OR
+
+pass in a param that overrides this configuration. ie.. `gplan 98ih2h3583`
+
 ## Usage
 
 1. cd to git project
@@ -39,6 +43,7 @@ ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE
 ...
 ---- Unmatched PRs ----
 ...
+PR:TITLE
 ```
 
 Note: unmatched PRs are github pull requests that doesn't have a matching planbox story

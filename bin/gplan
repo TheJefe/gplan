@@ -63,11 +63,15 @@ def print
 end
 
 def setup_repository
-  conf_file =Dir.pwd+"/.gplan"
-  if File.exists?(conf_file)
-    File.open(conf_file, "r") do |f|
-      #target should be repository/branch
-      @target = f.each_line.first.chomp
+  if ARGV[0]  # allow you to pass in a SHA or remote/branch to target against. This can be useful when generating release notes after a deployment
+    @target = ARGV[0]
+  else
+    conf_file =Dir.pwd+"/.gplan"
+    if File.exists?(conf_file)
+      File.open(conf_file, "r") do |f|
+        #target should be repository/branch
+        @target = f.each_line.first.chomp
+      end
     end
   end
   # Set the default branch if one is not set

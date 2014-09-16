@@ -73,12 +73,16 @@ def setup_repository
   # Set the default branch if one is not set
   @target = "production/master" unless @target
   @repo = @target.split("/").first
+  begin
+    `git fetch #{@repo}`
+  rescue
+    puts "unable to fetch #{@repo}, checking git log anyways..."
+  end
 end
 
 # MAIN
 
 setup_repository
-`git fetch #{@repo}`
 list= `git log #{@target}..`
 
 pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq

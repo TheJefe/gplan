@@ -3,6 +3,7 @@ require 'httparty'
 GITHUB_USERNAME=ENV['GITHUB_USERNAME']
 GITHUB_TOKEN=ENV['GITHUB_TOKEN']
 GITHUB_BASE_URL="https://api.github.com"
+HEADERS = {:headers => { 'User-Agent' => GITHUB_USERNAME, 'Content-Type' => 'application/json', 'Accept' => 'application/json'}}
 
 module Github
   include HTTParty
@@ -31,17 +32,18 @@ module Github
 
   def self.get_release_notes_array gh_pr_ids
     check_environment
+    set_repo_info
     get_stories gh_pr_ids
   end
 
+  def self.pulls_url(pr_id)
+    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/pulls/#{pr_id}?access_token=#{GITHUB_TOKEN}"
+  end
+
   def self.get_story(pr_id)
-    set_repo_info
-    story_response = self.get("#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/pulls/#{pr_id}?access_token=#{GITHUB_TOKEN}",
-                               {
-                                 :headers => { 'User-Agent' => GITHUB_USERNAME, 'Content-Type' => 'application/json', 'Accept' => 'application/json'}
-                               })
-    return story_response.parsed_response unless story_response.parsed_response.nil? || story_response.parsed_response["code"] == "error"
-    {"id" => story_id, "name" => "PR not found in github"}
+    pr = self.get( pulls_url(pr_id), HEADERS ).parsed_response
+    return {"id" => story_id, "name" => "PR not found in github"} if pr.nil? || pr["code"] == "error"
+    pr = extract_blocks pr
   end
 
   def self.get_stories(array_of_pr_ids)

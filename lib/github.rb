@@ -37,7 +37,7 @@ module Github
   end
 
   def self.pulls_url(pr_id)
-    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/pulls/#{pr_id}?access_token=#{GITHUB_TOKEN}"
+    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
   end
 
   def self.get_story(pr_id)
@@ -53,6 +53,19 @@ module Github
       stories<< get_story(id)
     end
     stories
+  end
+
+  # used to extract blocks of information from a PR body
+  def self.extract_blocks(pr)
+    body = pr['body']
+    blocks = body.scan(/## ?((?:(?!##).)*)/m)
+    return if blocks.nil?
+
+    pr['blocks'] = []
+    blocks.each do |block|
+      pr['blocks'] << block.first unless block.first.empty?
+    end
+    pr
   end
 
   # formats the output of stories

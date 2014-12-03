@@ -50,7 +50,7 @@ def pull_dependency(story)
 
   # find dependency based on blocks
   story['blocks'].each do |block|
-    if block.match(/(dependenc(y|ies|ys))/i)
+    if block.match(/((^|\W)dependen(t|cy|cies|cys))/i)
       return "PR ##{story['number']}: " + block
     end
   end

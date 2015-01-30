@@ -1,4 +1,5 @@
 require 'httparty'
+require 'pry'
 
 GITHUB_USERNAME=ENV['GITHUB_USERNAME']
 GITHUB_TOKEN=ENV['GITHUB_TOKEN']
@@ -44,6 +45,7 @@ class Github
     end
     pr = HTTParty.get( pulls_url(repo_name, pr_id), HEADERS ).parsed_response
     return {"id" => story_id, "name" => "PR not found in github"} if pr.nil? || pr["code"] == "error"
+    pr = extract_linked_issues pr
     pr = extract_blocks pr
   end
 
@@ -65,6 +67,20 @@ class Github
     pr['blocks'] = []
     blocks.each do |block|
       pr['blocks'] << block.first unless block.first.empty?
+    end
+    pr
+  end
+
+  # used to extract linked issues from the description follow githubs linking issue linking matchers
+  def extract_linked_issues(pr)
+    body = pr['body']
+    regex = /(close|close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)(\s)+((\w*\/\w*)?#(\d+))/im
+    linked_issues = body.scan(regex)
+    return if linked_issues.nil?
+
+    pr['linked_issues'] = []
+    linked_issues.each do |linked_issue|
+      pr['linked_issues'] << get_story(linked_issue[2]) unless linked_issue[2].nil?
     end
     pr
   end

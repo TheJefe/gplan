@@ -8,9 +8,6 @@ HEADERS = {:headers => { 'User-Agent' => GITHUB_USERNAME, 'Content-Type' => 'app
 module Github
   include HTTParty
 
-  @repo_name
-  @app_name
-
   def self.check_environment
     if GITHUB_USERNAME == nil || GITHUB_TOKEN == nil
       raise "environment variables not set. Please check that you have the following set...\
@@ -21,8 +18,7 @@ module Github
   def self.set_repo_info
     cmd = "git remote -v |grep origin"
     repo_info = `#{cmd}`
-    @repo_name = repo_info.scan(/\:(.*)\//).uniq.flatten.first
-    @app_name = repo_info.scan(/\/(.*)\.git/).uniq.flatten.first
+    repo_info.scan(/\:(.*\/.*)\.git/).uniq.flatten.first
   end
 
   def self.get_release_notes gh_pr_ids
@@ -32,12 +28,12 @@ module Github
 
   def self.get_release_notes_array gh_pr_ids
     check_environment
-    set_repo_info
-    get_stories gh_pr_ids
+    repo_name = get_repo_name
+    get_stories repo_name, gh_pr_ids
   end
 
   def self.pulls_url(pr_id)
-    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
+    "#{GITHUB_BASE_URL}/repos/#{repo_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
   end
 
   def self.get_story(pr_id)
@@ -50,7 +46,7 @@ module Github
     stories = []
     return [] unless array_of_pr_ids
     array_of_pr_ids.each do |id|
-      stories<< get_story(id)
+      stories<< get_story(repo_name, id)
     end
     stories
   end

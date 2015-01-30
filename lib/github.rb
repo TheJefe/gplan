@@ -9,7 +9,6 @@ module Github
   include HTTParty
 
   @repo_name
-  @app_name
 
   def self.check_environment
     if GITHUB_USERNAME == nil || GITHUB_TOKEN == nil
@@ -21,8 +20,7 @@ module Github
   def self.set_repo_info
     cmd = "git remote -v |grep origin"
     repo_info = `#{cmd}`
-    @repo_name = repo_info.scan(/\:(.*)\//).uniq.flatten.first
-    @app_name = repo_info.scan(/\/(.*)\.git/).uniq.flatten.first
+    @repo_name = repo_info.scan(/\:(.*\/.*)\.git/).uniq.flatten.first
   end
 
   def self.get_release_notes gh_pr_ids
@@ -37,7 +35,7 @@ module Github
   end
 
   def self.pulls_url(pr_id)
-    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/#{@app_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
+    "#{GITHUB_BASE_URL}/repos/#{@repo_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
   end
 
   def self.get_story(pr_id)

@@ -5,44 +5,49 @@ GITHUB_TOKEN=ENV['GITHUB_TOKEN']
 GITHUB_BASE_URL="https://api.github.com"
 HEADERS = {:headers => { 'User-Agent' => GITHUB_USERNAME, 'Content-Type' => 'application/json', 'Accept' => 'application/json'}}
 
-module Github
-  include HTTParty
+class Github
 
-  def self.check_environment
+  def check_environment
     if GITHUB_USERNAME == nil || GITHUB_TOKEN == nil
       raise "environment variables not set. Please check that you have the following set...\
       \nGITHUB_USERNAME\nGITHUB_TOKEN"
     end
   end
 
-  def self.set_repo_info
+  def get_repo_name
     cmd = "git remote -v |grep origin"
     repo_info = `#{cmd}`
     repo_info.scan(/\:(.*\/.*)\.git/).uniq.flatten.first
   end
 
-  def self.get_release_notes gh_pr_ids
+  def get_release_notes gh_pr_ids
     stories = get_release_notes_array gh_pr_ids
     result_string = format stories
   end
 
-  def self.get_release_notes_array gh_pr_ids
+  def get_release_notes_array gh_pr_ids
     check_environment
     repo_name = get_repo_name
     get_stories repo_name, gh_pr_ids
   end
 
-  def self.pulls_url(pr_id)
+  def pulls_url(repo_name, pr_id)
     "#{GITHUB_BASE_URL}/repos/#{repo_name}/issues/#{pr_id}?access_token=#{GITHUB_TOKEN}"
   end
 
-  def self.get_story(pr_id)
-    pr = self.get( pulls_url(pr_id), HEADERS ).parsed_response
+  def get_story(repo_name, pr_id = false)
+    # if story url like "user/repo_name#123"
+    unless pr_id
+      story = repo_name.split '#'
+      repo_name = story[0]
+      pr_id = story[1]
+    end
+    pr = HTTParty.get( pulls_url(repo_name, pr_id), HEADERS ).parsed_response
     return {"id" => story_id, "name" => "PR not found in github"} if pr.nil? || pr["code"] == "error"
     pr = extract_blocks pr
   end
 
-  def self.get_stories(array_of_pr_ids)
+  def get_stories(repo_name, array_of_pr_ids)
     stories = []
     return [] unless array_of_pr_ids
     array_of_pr_ids.each do |id|
@@ -52,7 +57,7 @@ module Github
   end
 
   # used to extract blocks of information from a PR body
-  def self.extract_blocks(pr)
+  def extract_blocks(pr)
     body = pr['body']
     blocks = body.scan(/## ?((?:(?!##).)*)/m)
     return if blocks.nil?
@@ -65,7 +70,7 @@ module Github
   end
 
   # formats the output of stories
-  def self.format(stories)
+  def format(stories)
     result_string = ""
     stories.each do |story|
       result_string += "#{story['number']}:"

@@ -124,7 +124,7 @@ list= `git log #{@target}..`
 pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
 gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 
-@gh_release_array = Github.get_release_notes_array gh_pr_ids
+@gh_release_array = Github.new.get_release_notes_array gh_pr_ids
 @pb_release_array = Planbox.get_release_notes_array pb_story_ids
 
 pull_pb_numbers_from_prs

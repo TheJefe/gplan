@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 #
 # This script is used to find all of the planbox story numbers from the git log
-# For lesson-player it is dependent on lesson-player being in the directory name for the repo
 
+# This is just a neat way to require everything in the lib path
 require 'pathname'
 bin_path = Pathname.new(__FILE__).realpath
 $:.unshift File.expand_path('../../lib', bin_path)
-require 'planbox'
-require 'github'
+Dir[bin_path + '../../lib/*.rb'].each {|file| require file }
+
+include Printer
 
 PB_STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
 GH_PR_REGEX=/Merge pull request #(\d*)/i
@@ -62,38 +63,6 @@ def pull_dependency(story)
   return nil
 end
 
-def print
-  end_of_pbs = false
-  release_notes = "ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE\n"
-  dependencies = []
-  @combined.each do |story|
-    if !end_of_pbs and story['name'].nil?
-      end_of_pbs = true
-      release_notes += "\n---- Unmatched PRs ----\n\n"
-      release_notes += "PR:TITLE\n"
-    end
-
-    dependency = pull_dependency(story)
-    dependencies << dependency unless dependency.nil?
-
-    line = ""
-    line += "#{story['id']}:#{story['status']}:#{story['name']}:#{story['project_name']}:#{story['project_alias']}" unless end_of_pbs
-    line += ":#{story['number']}:#{story['title']}" unless story['number'].nil?
-    release_notes += line + "\n"
-  end
-
-  # print dependency blocks
-  unless dependencies.empty?
-    release_notes += "\n---- Dependencies ----\n\n"
-    dependencies.each do |dependency|
-    release_notes += dependency
-    release_notes += "\n"
-    end
-  end
-
-  puts release_notes
-end
-
 def setup_repository
   if ARGV[0]  # allow you to pass in a SHA or remote/branch to target against. This can be useful when generating release notes after a deployment
     @target = ARGV[0]
@@ -129,4 +98,4 @@ gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 
 pull_pb_numbers_from_prs
 combine_results
-print
+Printer.print @combined

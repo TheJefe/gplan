@@ -14,20 +14,34 @@ module Printer
       dependencies << dependency unless dependency.nil?
 
       line = ""
-      line += "#{story['id']}:#{story['status']}:#{story['name']}:#{story['project_name']}:#{story['project_alias']}" unless end_of_pbs
-      line += ":#{story['number']}:#{story['title']}" unless story['number'].nil?
+      line += planbox_info story unless end_of_pbs
+      line += github_pr_info story unless story['number'].nil?
+
       release_notes += line + "\n"
     end
 
     # print dependency blocks
     unless dependencies.empty?
-      release_notes += "\n---- Dependencies ----\n\n"
+      release_notes += include_dependencies dependencies
+    end
+
+    puts release_notes
+  end
+
+  def planbox_info story
+    "#{story['id']}:#{story['status']}:#{story['name']}:#{story['project_name']}:#{story['project_alias']}"
+  end
+
+  def github_pr_info story
+    ":#{story['number']}:#{story['title']}"
+  end
+
+  def include_dependencies dependencies
+      release_notes = "\n---- Dependencies ----\n\n"
       dependencies.each do |dependency|
         release_notes += dependency
         release_notes += "\n"
       end
-    end
-
-    puts release_notes
+      release_notes
   end
 end

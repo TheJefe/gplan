@@ -6,7 +6,7 @@ module Printer
     stories.each do |story|
       if !end_of_pbs and story['name'].nil?
         end_of_pbs = true
-        release_notes += "\n---- Unmatched PRs ----\n\n"
+        release_notes += title "Unmatched PRs"
         release_notes += "PR:TITLE\n"
       end
 
@@ -37,11 +37,15 @@ module Printer
   end
 
   def include_dependencies dependencies
-      release_notes = "\n---- Dependencies ----\n\n"
+      release_notes = title "Dependencies"
       dependencies.each do |dependency|
         release_notes += dependency
         release_notes += "\n"
       end
       release_notes
+  end
+
+  def title text
+    "\n---- #{text} ----\n\n"
   end
 end

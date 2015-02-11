@@ -1,5 +1,4 @@
 require 'httparty'
-require 'pry'
 
 GITHUB_USERNAME=ENV['GITHUB_USERNAME']
 GITHUB_TOKEN=ENV['GITHUB_TOKEN']

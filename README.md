@@ -4,7 +4,9 @@
 
 GPlan started out as a simple ruby script that parsed out ticket numbers
 from any git log of the current branch compared to its production branch
-and create puts together release notes
+and puts together release notes
+
+As of right now, it does this by combining Github Pull Requests, Github Issues and Planbox Stories.
 
 ## Installation
 

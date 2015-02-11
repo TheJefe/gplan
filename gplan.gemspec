@@ -3,11 +3,11 @@ $:.unshift lib unless $:.include?(lib)
 
 Gem::Specification.new do |s|
   s.name        = 'gplan'
-  s.version     = '0.0.8'
-  s.date        = '2014-10-03'
+  s.version     = '0.0.9'
+  s.date        = '2015-02-11'
   s.authors     = ["Jeff Koenig"]
   s.email       = 'jkoenig311@gmail.com'
-  s.homepage    = 'https://github.com/jkoenig311/gplan'
+  s.homepage    = 'https://github.com/el-jefe-/gplan'
   s.summary     = "Creates release notes from the git log and planbox"
   s.description = "Creates release notes from the git log and planbox"
   s.executables      = ["gplan"]

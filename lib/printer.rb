@@ -33,7 +33,18 @@ module Printer
   end
 
   def github_pr_info story
-    ":#{story['number']}:#{story['title']}"
+    line = ":#{story['number']}:#{story['title']}"
+    line += github_issue_info story if story['linked_issues']
+    line
+  end
+
+  def github_issue_info story
+    line = ""
+    story['linked_issues'].each do |issue|
+      line += ":ISSUE##{issue['number']}"
+      line +=":Milestone #{issue['milestone']['title']}" if issue['milestone']['title']
+    end
+    line
   end
 
   def include_dependencies dependencies

@@ -39,7 +39,7 @@ class Github
     # if story url like "user/repo_name#123"
     unless pr_id
       story = repo_name.split '#'
-      repo_name = story[0]
+      repo_name = story[0].empty? ? get_repo_name : story[0]
       pr_id = story[1]
     end
     pr = HTTParty.get( pulls_url(repo_name, pr_id), HEADERS ).parsed_response
@@ -73,13 +73,13 @@ class Github
   # used to extract linked issues from the description follow githubs linking issue linking matchers
   def extract_linked_issues(pr)
     body = pr['body']
-    regex = /(close|close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)(\s)+((\w*\/\w*)?#(\d+))/im
+    regex = /(?:close|close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved|connect(?:s)?(?:ed)?\sto?)\s?+((\w*\/\w*)?#(\d+))/im
     linked_issues = body.scan(regex)
     return if linked_issues.nil?
 
     pr['linked_issues'] = []
     linked_issues.each do |linked_issue|
-      pr['linked_issues'] << get_story(linked_issue[2]) unless linked_issue[2].nil?
+      pr['linked_issues'] << get_story(linked_issue[0]) unless linked_issue[0].nil?
     end
     pr
   end

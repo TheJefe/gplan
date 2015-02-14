@@ -98,4 +98,5 @@ gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 
 pull_pb_numbers_from_prs
 combine_results
-Printer.print @combined
+Printer.html @combined
+#Printer.print @combined

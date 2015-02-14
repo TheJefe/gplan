@@ -1,4 +1,15 @@
+require 'haml'
+
 module Printer
+
+  def html stories
+    $stories = stories
+    file_path = File.expand_path('../../templates/template.html.haml', __FILE__)
+    template = File.read(file_path)
+    engine = Haml::Engine.new(template)
+    File.write 'releasenotes.html',engine.render
+  end
+
   def print stories
     end_of_pbs = false
     release_notes = "ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE\n"

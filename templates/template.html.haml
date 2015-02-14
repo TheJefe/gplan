@@ -1,0 +1,11 @@
+%h2 Apangea Release notes
+%table
+  %thead
+    %tr
+      %th ID
+      %th Description
+  %tbody
+  - $stories.each do |story|
+    %tr
+      %td= story['id']
+      %td= story['name']

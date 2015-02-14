@@ -42,7 +42,7 @@ module Printer
     line = ""
     story['linked_issues'].each do |issue|
       line += ":ISSUE##{issue['number']}"
-      line +=":Milestone #{issue['milestone']['title']}" if issue['milestone']['title']
+      line +=":Milestone #{issue['milestone']['title']}" if issue['milestone']
     end
     line
   end

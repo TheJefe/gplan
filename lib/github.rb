@@ -60,8 +60,9 @@ class Github
   # used to extract blocks of information from a PR body
   def extract_blocks(pr)
     body = pr['body']
+    return pr if body.nil?
     blocks = body.scan(/## ?((?:(?!##).)*)/m)
-    return if blocks.nil?
+    return pr if blocks.nil?
 
     pr['blocks'] = []
     blocks.each do |block|
@@ -73,9 +74,11 @@ class Github
   # used to extract linked issues from the description follow githubs linking issue linking matchers
   def extract_linked_issues(pr)
     body = pr['body']
+    # UGH, this happens when a story doesn't have any description
+    return pr if body.nil?
     regex = /(?:close|close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved|connect(?:s)?(?:ed)?\sto?)\s?+((\w*\/\w*)?#(\d+))/im
     linked_issues = body.scan(regex)
-    return if linked_issues.nil?
+    return pr if linked_issues.nil?
 
     pr['linked_issues'] = []
     linked_issues.each do |linked_issue|

@@ -44,6 +44,8 @@ module Planbox
 
     story = story.merge({"project_name" => project_name})
     story = story.merge({"project_alias" => project_alias})
+    story = story.merge(
+      {"pb_url" => "https://www.planbox.com/initiatives/#{story['product_id']}#story_id=#{story['id']}"})
 
     story
   end

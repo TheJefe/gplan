@@ -1,11 +1,47 @@
-%h2 Apangea Release notes
-%table
+%h2 Release notes
+%table{:border => "1"}
   %thead
     %tr
       %th ID
-      %th Description
+      %th STATUS
+      %th DESCRIPTION
+      %th PROJECT NAME
+      %th PROJECT ALIAS
+      %th PR
+      %th PR TITLE
   %tbody
   - $stories.each do |story|
     %tr
-      %td= story['id']
+      - break if story['name'].nil?
+      %td
+        %a{href: story['pb_url']}= story['id']
+      %td= story['status']
       %td= story['name']
+      %td= story['project_name']
+      %td= story['project_alias']
+      %td
+        %a{href: story['html_url']}= story['number']
+      %td= story['title']
+
+%h2 Unmatched PRs
+%table{:border => "1"}
+  %thead
+    %tr
+      %th PR
+      %th PR Title
+      %th Issues/Milestone
+  %tbody
+  - $stories.each do |story|
+    - next unless story['name'].nil?
+    %tr
+      %td
+        %a{href: story['html_url']}= story['number']
+      %td= story['title']
+      %td
+        %table
+          %tbody
+            - story['linked_issues'].each do |issue|
+              %tr
+                %td
+                  %a{href: issue['html_url']}= issue['number']
+                %td= issue['milestone']['title'] if issue['milestone']

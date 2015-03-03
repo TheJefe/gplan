@@ -13,6 +13,10 @@ include Printer
 PB_STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
 GH_PR_REGEX=/Merge pull request #(\d*)/i
 
+@repo_overide = ARGV.select{|i| i[/^(?!-)/]}.first
+@params = ARGV.select{|i| i[/^-/]}
+@PRINT_HTML = @params.include? "-h"
+
 @gh_release_array = []
 @pb_release_array = []
 @combined = []
@@ -64,8 +68,8 @@ def pull_dependency(story)
 end
 
 def setup_repository
-  if ARGV[0]  # allow you to pass in a SHA or remote/branch to target against. This can be useful when generating release notes after a deployment
-    @target = ARGV[0]
+  if @repo_overide  # allow you to pass in a SHA or remote/branch to target against. This can be useful when generating release notes after a deployment
+    @target = @repo_overide
   else
     conf_file =Dir.pwd+"/.gplan"
     if File.exists?(conf_file)
@@ -98,5 +102,9 @@ gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
 
 pull_pb_numbers_from_prs
 combine_results
-Printer.html @combined
-#Printer.print @combined
+
+if @PRINT_HTML
+  Printer.html @combined
+else
+  Printer.print @combined
+end

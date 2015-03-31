@@ -55,14 +55,14 @@ def pull_dependency(story)
 
   # find dependency based on blocks
   story['blocks'].each do |block|
-    if block.match(/((^|\W)dependen(t|cy|cies|cys))/i)
-      return "PR ##{story['number']}: " + block
+    if block.match(/(^(#+|\s+)?dependen(t|cy|cies|cys))/i)
+      return block
     end
   end
 
   # else find dependency based on labels
   if story['labels'].to_s.match /Has Dependency/i
-    return "PR ##{story['number']}: has a dependency label"
+    return "has a dependency label"
   end
   return nil
 end

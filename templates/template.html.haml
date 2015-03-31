@@ -23,10 +23,9 @@
       %td
         %a{href: story['html_url']}= story['number']
       %td= story['title']
-      - next if story['blocks'].nil?
-      - story['blocks'].each do |block|
-        - next unless block.match(/((^|\W)dependen(t|cy|cies|cys))/i)
-        %td= block
+      - block = pull_dependency(story)
+      - next if block.nil?
+      %td= block
 
 %h2 Unmatched PRs
 %table{:border => "1"}
@@ -51,7 +50,6 @@
                 %td
                   %a{href: issue['html_url']}= issue['number']
                 %td= issue['milestone']['title'] if issue['milestone']
-      - next if story['blocks'].nil?
-      - story['blocks'].each do |block|
-        - next unless block.match(/((^|\W)dependen(t|cy|cies|cys))/i)
+        - block = pull_dependency(story)
+        - next if block.nil?
         %td= block

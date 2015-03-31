@@ -22,7 +22,7 @@ module Printer
       end
 
       dependency = pull_dependency(story)
-      dependencies << dependency unless dependency.nil?
+      dependencies << "PR ##{story['number']}: " + dependency unless dependency.nil?
 
       line = ""
       line += planbox_info story unless end_of_pbs

@@ -49,3 +49,13 @@ PR:TITLE
 ```
 
 Note: unmatched PRs are github pull requests that doesn't have a matching planbox story
+
+## Tests
+
+To run tests:
+
+    rake test
+
+or just
+
+    rake

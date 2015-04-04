@@ -40,15 +40,17 @@ class Printer
   end
 
   def get_dependency(story)
-    return if story['blocks'].nil?
 
     # find dependency based on blocks
-    story['blocks'].each do |block|
-      if block.match(/(^(#+|\s+)?dependen(t|cy|cies|cys))/i)
-        return block
+    unless story['blocks'].nil?
+      story['blocks'].each do |block|
+        if block.match(/(^(#+|\s+)?dependen(t|cy|cies|cys))/i)
+          return block
+        end
       end
     end
 
+    return if story['labels'].nil?
     # else find dependency based on labels
     if story['labels'].to_s.match /Has Dependency/i
       return "has a dependency label"

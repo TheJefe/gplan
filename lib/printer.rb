@@ -1,6 +1,6 @@
 require 'haml'
 
-module Printer
+class Printer
 
   def html stories
     $stories = stories
@@ -21,7 +21,7 @@ module Printer
         release_notes += "PR:TITLE\n"
       end
 
-      dependency = pull_dependency(story)
+      dependency = get_dependency(story)
       dependencies << "PR ##{story['number']}: " + dependency unless dependency.nil?
 
       line = ""
@@ -37,6 +37,23 @@ module Printer
     end
 
     puts release_notes
+  end
+
+  def get_dependency(story)
+    return if story['blocks'].nil?
+
+    # find dependency based on blocks
+    story['blocks'].each do |block|
+      if block.match(/(^(#+|\s+)?dependen(t|cy|cies|cys))/i)
+        return block
+      end
+    end
+
+    # else find dependency based on labels
+    if story['labels'].to_s.match /Has Dependency/i
+      return "has a dependency label"
+    end
+    return nil
   end
 
   def planbox_info story

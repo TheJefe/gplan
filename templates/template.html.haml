@@ -23,7 +23,7 @@
       %td
         %a{href: story['html_url']}= story['number']
       %td= story['title']
-      - block = pull_dependency(story)
+      - block = get_dependency(story)
       - next if block.nil?
       %td= block
 
@@ -50,6 +50,6 @@
                 %td
                   %a{href: issue['html_url']}= issue['number']
                 %td= issue['milestone']['title'] if issue['milestone']
-        - block = pull_dependency(story)
+        - block = get_dependency(story)
         - next if block.nil?
         %td= block

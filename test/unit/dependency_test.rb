@@ -6,6 +6,7 @@ class DependencyTest < UnitTest
     describe 'show blocks' do
 
       match_words = %w(
+        depends
         dependent
         dependency
         dependencies

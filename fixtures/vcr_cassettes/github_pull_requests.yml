@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.github.com/repos/username/repo/issues/1?access_token=123
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - TheJefe
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 05 Apr 2015 02:55:26 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2282'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4984'
+      X-Ratelimit-Reset:
+      - '1428204696'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Fri, 03 Apr 2015 19:40:47 GMT
+      Etag:
+      - '"a1ab6d6b8c492b97d573ff676b8a2d4a"'
+      X-Oauth-Scopes:
+      - gist, repo
+      X-Accepted-Oauth-Scopes:
+      - ''
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - '*'
+      X-Github-Request-Id:
+      - 62EC2E61:6B93:43993F:5520A41E
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 7f48e2f7761567e923121f17538d7a6d
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://api.github.com/repos/username/repo/issues/1","labels_url":"https://api.github.com/repos/username/repo/issues/1/labels{/name}","comments_url":"https://api.github.com/repos/username/repo/issues/1/comments","events_url":"https://api.github.com/repos/username/repo/issues/1/events","html_url":"https://github.com/username/repo/pull/1","id":66143574,"number":1,"title":"
+        first pull request","user":{"login":"JohnSmith","id":1527103,"avatar_url":"https://avatars.githubusercontent.com/u/1527103?v=3","gravatar_id":"","url":"https://api.github.com/users/JohnSmith","html_url":"https://github.com/JohnSmith","followers_url":"https://api.github.com/users/JohnSmith/followers","following_url":"https://api.github.com/users/JohnSmith/following{/other_user}","gists_url":"https://api.github.com/users/JohnSmith/gists{/gist_id}","starred_url":"https://api.github.com/users/JohnSmith/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/JohnSmith/subscriptions","organizations_url":"https://api.github.com/users/JohnSmith/orgs","repos_url":"https://api.github.com/users/JohnSmith/repos","events_url":"https://api.github.com/users/JohnSmith/events{/privacy}","received_events_url":"https://api.github.com/users/JohnSmith/received_events","type":"User","site_admin":false},"labels":[{"url":"https://api.github.com/repos/username/repo/labels/Has%20Dependency","name":"Has
+        Dependency","color":"207de5"},{"url":"https://api.github.com/repos/username/repo/labels/in%20progress","name":"in
+        progress","color":"ededed"},{"url":"https://api.github.com/repos/username/repo/labels/WIP","name":"WIP","color":"eb6420"}],"state":"open","locked":false,"assignee":null,"milestone":null,"comments":0,"created_at":"2015-04-03T13:08:40Z","updated_at":"2015-04-03T13:08:59Z","closed_at":null,"pull_request":{"url":"https://api.github.com/repos/username/repo/pulls/1","html_url":"https://github.com/username/repo/pull/1","diff_url":"https://github.com/username/repo/pull/1.diff","patch_url":"https://github.com/username/repo/pull/1.patch"},"body":"Depends
+        on #2126 ","closed_by":null}'
+    http_version: 
+  recorded_at: Sun, 05 Apr 2015 02:55:26 GMT
+- request:
+    method: get
+    uri: https://api.github.com/repos/username/repo/issues/2?access_token=123
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - TheJefe
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - GitHub.com
+      Date:
+      - Sun, 05 Apr 2015 02:55:27 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '2282'
+      Status:
+      - 200 OK
+      X-Ratelimit-Limit:
+      - '5000'
+      X-Ratelimit-Remaining:
+      - '4983'
+      X-Ratelimit-Reset:
+      - '1428204696'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Last-Modified:
+      - Fri, 03 Apr 2015 19:40:47 GMT
+      Etag:
+      - '"a1ab6d6b8c492b97d573ff676b8a2d4a"'
+      X-Oauth-Scopes:
+      - gist, repo
+      X-Accepted-Oauth-Scopes:
+      - ''
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding
+      X-Github-Media-Type:
+      - github.v3
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Frame-Options:
+      - deny
+      Content-Security-Policy:
+      - default-src 'none'
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Access-Control-Expose-Headers:
+      - ETag, Link, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset,
+        X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval
+      Access-Control-Allow-Origin:
+      - '*'
+      X-Github-Request-Id:
+      - 62EC2E61:6B93:4399A5:5520A41F
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      X-Content-Type-Options:
+      - nosniff
+      X-Served-By:
+      - 5aeb3f30c9e3ef6ef7bcbcddfd9a68f7
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://api.github.com/repos/username/repo/issues/2","labels_url":"https://api.github.com/repos/username/repo/issues/2/labels{/name}","comments_url":"https://api.github.com/repos/username/repo/issues/2/comments","events_url":"https://api.github.com/repos/username/repo/issues/2/events","html_url":"https://github.com/username/repo/pull/2","id":66143574,"number":2,"title":"
+        second pull request","user":{"login":"JohnSmith","id":1527103,"avatar_url":"https://avatars.githubusercontent.com/u/1527103?v=3","gravatar_id":"","url":"https://api.github.com/users/JohnSmith","html_url":"https://github.com/JohnSmith","followers_url":"https://api.github.com/users/JohnSmith/followers","following_url":"https://api.github.com/users/JohnSmith/following{/other_user}","gists_url":"https://api.github.com/users/JohnSmith/gists{/gist_id}","starred_url":"https://api.github.com/users/JohnSmith/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/JohnSmith/subscriptions","organizations_url":"https://api.github.com/users/JohnSmith/orgs","repos_url":"https://api.github.com/users/JohnSmith/repos","events_url":"https://api.github.com/users/JohnSmith/events{/privacy}","received_events_url":"https://api.github.com/users/JohnSmith/received_events","type":"User","site_admin":false},"labels":[{"url":"https://api.github.com/repos/username/repo/labels/Has%20Dependency","name":"Has
+        Dependency","color":"207de5"},{"url":"https://api.github.com/repos/username/repo/labels/in%20progress","name":"in
+        progress","color":"ededed"},{"url":"https://api.github.com/repos/username/repo/labels/WIP","name":"WIP","color":"eb6420"}],"state":"open","locked":false,"assignee":null,"milestone":null,"comments":0,"created_at":"2015-04-03T13:08:40Z","updated_at":"2015-04-03T13:08:59Z","closed_at":null,"pull_request":{"url":"https://api.github.com/repos/username/repo/pulls/2","html_url":"https://github.com/username/repo/pull/2","diff_url":"https://github.com/username/repo/pull/2.diff","patch_url":"https://github.com/username/repo/pull/2.patch"},"body":"## Depends
+        on #2126 ","closed_by":null}'
+    http_version: 
+  recorded_at: Sun, 05 Apr 2015 02:55:26 GMT
+recorded_with: VCR 2.9.3

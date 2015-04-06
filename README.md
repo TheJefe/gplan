@@ -50,6 +50,39 @@ PR:TITLE
 
 Note: unmatched PRs are github pull requests that doesn't have a matching planbox story
 
+### HTML Release notes
+
+To ouput release notes as HTML
+
+    gplan -h
+
+They will look something like this...
+
+![image](https://cloud.githubusercontent.com/assets/2390653/7012015/0a6e47b0-dc7c-11e4-8ec0-ad8b39c14e94.png)
+
+
+## Dependency
+
+Gplan will detect dependencies based on a Github PR. It will find it using this logic
+
+1. Does the PR contain a markup header (ie. some number of #'s) followed by some variation of the word dependency?
+
+  example:
+  ```
+  ## Dependencies
+  you must run a rake task
+  ```
+Note that this will include everything from the '##' to the next '##' or the end of the PR body
+
+2. Does the PR contain a line that starts with "depends on"? then that line will be included
+
+  example:
+  ```
+  Depends on #123
+  ```
+
+3. Does the PR contain the label "Has Dependency"?
+
 ## Tests
 
 To run tests:

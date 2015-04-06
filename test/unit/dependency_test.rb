@@ -52,6 +52,13 @@ class DependencyTest < UnitTest
         story = stub_story_with_block dependency
         Printer.new.get_dependency(story).must_equal nil
       end
+
+      it 'when depends is on another line of a block' do
+        dependency = "## To QA:\n"+
+          "depends on suff"
+        story = stub_story_with_block dependency
+        Printer.new.get_dependency(story).must_equal nil
+      end
     end
 
     describe 'dependency flag' do

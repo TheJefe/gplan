@@ -44,7 +44,7 @@ class Printer
     # find dependency based on blocks
     unless story['blocks'].nil?
       story['blocks'].each do |block|
-        if block.match(/(^(#+(\s+)?|\s+)?depend(s|ent|ency|encies|encys))/i)
+        if block.split("\n")[0].match(/(^(#* *depend(s|ent|ency|encies|encys)))/i)
           return block
         end
       end

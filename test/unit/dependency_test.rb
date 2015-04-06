@@ -43,6 +43,12 @@ class DependencyTest < UnitTest
         Printer.new.get_dependency(story).must_equal dependency
       end
 
+      it 'starting with depends on' do
+        dependency = 'Depends on #123'
+        body = "This is a PR about things and dependencies\n#{dependency}\nmoar stuff"
+        story = {'body' => body}
+        Printer.new.get_dependency(story).must_equal dependency
+      end
     end
 
     describe 'dont show blocks' do

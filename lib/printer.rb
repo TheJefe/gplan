@@ -50,6 +50,12 @@ class Printer
       end
     end
 
+    # find a line starting with 'depends on' in body
+    if story['body']
+      dependency = story['body'].match(/^(depends +on.*)/i)
+      return dependency[0] if dependency
+    end
+
     return if story['labels'].nil?
     # else find dependency based on labels
     if story['labels'].to_s.match /Has Dependency/i

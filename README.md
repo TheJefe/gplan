@@ -85,6 +85,10 @@ Note that this will include everything from the '##' to the next '##' or the end
 
 ## Tests
 
+### Setup
+
+    bundle
+
 To run tests:
 
     rake test

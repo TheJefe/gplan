@@ -1,0 +1,46 @@
+PATH
+  remote: .
+  specs:
+    gplan (0.1.4)
+      haml (~> 4.0.5)
+      httparty (~> 0.13)
+      rake (~> 10.4.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.8)
+    coderay (1.1.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
+    haml (4.0.6)
+      tilt
+    httparty (0.13.3)
+      json (~> 1.8)
+      multi_xml (>= 0.5.2)
+    json (1.8.2)
+    method_source (0.8.2)
+    minitest (5.6.1)
+    multi_xml (0.5.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    rake (10.4.2)
+    safe_yaml (1.0.4)
+    slop (3.6.0)
+    tilt (2.0.1)
+    vcr (2.9.3)
+    webmock (1.21.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gplan!
+  minitest (~> 5.6.1)
+  pry
+  vcr (~> 2.9.3)
+  webmock (~> 1.21.0)

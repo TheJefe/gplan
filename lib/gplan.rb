@@ -20,8 +20,8 @@ class Gplan
     setup_repository
     list= `git log #{@target}..`
 
-    pb_story_ids = list.scan(PB_STORY_REGEX).flatten.uniq
-    gh_pr_ids = list.scan(GH_PR_REGEX).flatten.uniq
+    pb_story_ids = get_ids(list, PB_STORY_REGEX)
+    gh_pr_ids = get_ids(list, GH_PR_REGEX)
 
     @gh_release_array = Github.new.get_release_notes_array gh_pr_ids
     @pb_release_array = Planbox.get_release_notes_array pb_story_ids
@@ -34,6 +34,10 @@ class Gplan
     else
       Printer.new.print @combined
     end
+  end
+
+  def get_ids list, regex
+    list.scan(regex).flatten.uniq
   end
 
   def combine_results

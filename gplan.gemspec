@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary       = "Creates release notes from the git log and planbox"
   s.description   = "Creates release notes from the git log and planbox"
   s.executables   = ["gplan"]
-  s.files         = `git ls-files`.split($\)
+  s.files        = Dir.glob("bin/**/*") + Dir.glob("lib/**/*") + Dir.glob("templates/**/*") + %w(README.md)
   s.require_paths = ['lib']
   s.add_runtime_dependency('httparty', "~> 0.13")
   s.add_runtime_dependency('haml', "~> 4.0.5")

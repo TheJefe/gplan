@@ -2,7 +2,7 @@ require 'printer'
 require 'github'
 require 'planbox'
 
-PB_STORY_REGEX=/\[(?:fixes)? *#*([0-9]*)\]/i
+PB_STORY_REGEX=/\[ ?(?:fixes|done)? ?#([0-9]+) ?\]/i
 GH_PR_REGEX=/Merge pull request #(\d*)/i
 
 class Gplan

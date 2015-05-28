@@ -41,14 +41,14 @@ pass in a param that overrides this configuration. ie.. `gplan 98ih2h3583`
 4. you should now get a list of the pattern
 
 ```
+PR:TITLE:ISSUES:MILESTONE
+...
+---- Matched Planbox Stories ----
+...
 ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE
-...
----- Unmatched PRs ----
-...
-PR:TITLE
 ```
 
-Note: unmatched PRs are github pull requests that doesn't have a matching planbox story
+Note: the first table is unmatched PRs and are github pull requests that doesn't have a matching planbox story
 
 ### HTML Release notes
 
@@ -58,7 +58,7 @@ To ouput release notes as HTML
 
 They will look something like this...
 
-![image](https://cloud.githubusercontent.com/assets/2390653/7012015/0a6e47b0-dc7c-11e4-8ec0-ad8b39c14e94.png)
+![image](https://cloud.githubusercontent.com/assets/2390653/7863992/7dd34df2-052d-11e5-80ef-77c2cef5b658.png)
 
 
 ## Dependency

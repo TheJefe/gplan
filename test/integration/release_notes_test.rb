@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'pry'
 
 class ReleaseNotesTest < UnitTest
   describe 'release notes' do
@@ -18,14 +17,15 @@ class ReleaseNotesTest < UnitTest
       Printer.new.print @stories
       output = $stdout.string.split("\n")
       $stdout = old_stdout
-      output.count.must_equal 12
+      output.must_equal ["PR:TITLE:ISSUES:MILESTONE", ":1: first pull request", ":2: second pull request", "", "---- Dependencies ----", "", "PR #1: Depends on #2126 ", "PR #2: Depends on #2126 "]
       output.last.must_equal "PR #2: Depends on #2126 "
     end
 
     it 'can be printed to an html file' do
       output = Printer.new.html @stories
       output.first.must_equal "<h2>Release notes</h2>"
-      output.count.must_equal 55
+      # really long string that happens to be the html that gets created
+      output.must_equal ["<h2>Release notes</h2>", "<table border='1'>", "  <thead>", "    <tr>", "      <th>PR</th>", "      <th>PR Title</th>", "      <th>Issues/Milestone</th>", "      <th>Dependencies</th>", "    </tr>", "  </thead>", "  <tbody></tbody>", "  <tr>", "    <td>", "      <a href='https://github.com/username/repo/pull/1'>1</a>", "    </td>", "    <td> first pull request</td>", "    <td>", "      <table>", "        <tbody>", "        </tbody>", "      </table>", "      <td>Depends on #2126</td>", "    </td>", "  </tr>", "  <tr>", "    <td>", "      <a href='https://github.com/username/repo/pull/2'>2</a>", "    </td>", "    <td> second pull request</td>", "    <td>", "      <table>", "        <tbody>", "        </tbody>", "      </table>", "      <td>Depends on #2126</td>", "    </td>", "  </tr>", "</table>"]
       assert output.to_s.include? "Depends on #2126"
     end
   end

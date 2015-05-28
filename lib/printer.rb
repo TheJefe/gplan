@@ -11,24 +11,34 @@ class Printer
   end
 
   def print stories
-    end_of_pbs = false
-    release_notes = "ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE\n"
     dependencies = []
-    stories.each do |story|
-      if !end_of_pbs and story['name'].nil?
-        end_of_pbs = true
-        release_notes += title "Unmatched PRs"
-        release_notes += "PR:TITLE:ISSUES:MILESTONE\n"
-      end
 
+    # Github stories only
+    release_notes = "PR:TITLE:ISSUES:MILESTONE\n"
+    stories.each do |story|
+      next if Planbox.has_planbox?(story)
       dependency = get_dependency(story)
       dependencies << "PR ##{story['number']}: " + dependency unless dependency.nil?
 
       line = ""
-      line += planbox_info(story) unless end_of_pbs
       line += github_pr_info(story) unless story['number'].nil?
 
       release_notes += line + "\n"
+    end
+
+    # Planbox matching stories
+    if Planbox.has_planbox?(stories) 
+      release_notes += title "Matched Planbox Stories"
+      release_notes += "ID:STATUS:TITLE:PROJECT_NAME:PROJECT_ALIAS:PR:TITLE\n"
+      stories.each do |story|
+        next unless Planbox.has_planbox?(story)
+        dependency = get_dependency(story)
+        dependencies << "PR ##{story['number']}: " + dependency unless dependency.nil?
+
+        line = ""
+        line += planbox_info(story)
+        line += github_pr_info(story) unless story['number'].nil?
+      end
     end
 
     # print dependency blocks

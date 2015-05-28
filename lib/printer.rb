@@ -25,8 +25,8 @@ class Printer
       dependencies << "PR ##{story['number']}: " + dependency unless dependency.nil?
 
       line = ""
-      line += planbox_info story unless end_of_pbs
-      line += github_pr_info story unless story['number'].nil?
+      line += planbox_info(story) unless end_of_pbs
+      line += github_pr_info(story) unless story['number'].nil?
 
       release_notes += line + "\n"
     end
@@ -70,7 +70,7 @@ class Printer
 
   def github_pr_info story
     line = ":#{story['number']}:#{story['title']}"
-    line += github_issue_info story if story['linked_issues']
+    line += github_issue_info(story) if story['linked_issues']
     line
   end
 

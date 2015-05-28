@@ -74,4 +74,8 @@ module Planbox
     result_string.gsub!('`', ' ') || result_string
   end
 
+  def self.has_planbox? story
+    true unless story['name'].nil?
+  end
+
 end

@@ -13,7 +13,7 @@
   %tbody
   - $stories.each do |story|
     %tr
-      - break if story['name'].nil?
+      - break unless Planbox.has_planbox?(story)
       %td
         %a{href: story['pb_url']}= story['id']
       %td= story['status']
@@ -37,7 +37,7 @@
       %th Dependencies
   %tbody
   - $stories.each do |story|
-    - next unless story['name'].nil?
+    - next if Planbox.has_planbox?(story)
     %tr
       %td
         %a{href: story['html_url']}= story['number']

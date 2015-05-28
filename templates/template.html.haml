@@ -20,7 +20,9 @@
               %tr
                 %td
                   %a{href: issue['html_url']}= issue['number']
-                %td= issue['milestone']['title'] if issue['milestone']
+                %td
+                  - if issue['milestone']
+                    %a{href: issue['milestone']['html_url']}= issue['milestone']['title']
         - block = Printer.new.get_dependency(story)
         - next if block.nil?
         %td= block

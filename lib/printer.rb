@@ -18,7 +18,7 @@ class Printer
       if !end_of_pbs and story['name'].nil?
         end_of_pbs = true
         release_notes += title "Unmatched PRs"
-        release_notes += "PR:TITLE\n"
+        release_notes += "PR:TITLE:ISSUES:MILESTONE\n"
       end
 
       dependency = get_dependency(story)

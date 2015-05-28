@@ -2,35 +2,6 @@
 %table{:border => "1"}
   %thead
     %tr
-      %th ID
-      %th STATUS
-      %th DESCRIPTION
-      %th PROJECT NAME
-      %th PROJECT ALIAS
-      %th PR
-      %th PR TITLE
-      %th Dependencies
-  %tbody
-  - $stories.each do |story|
-    %tr
-      - break unless Planbox.has_planbox?(story)
-      %td
-        %a{href: story['pb_url']}= story['id']
-      %td= story['status']
-      %td= story['name']
-      %td= story['project_name']
-      %td= story['project_alias']
-      %td
-        %a{href: story['html_url']}= story['number']
-      %td= story['title']
-      - block = Printer.new.get_dependency(story)
-      - next if block.nil?
-      %td= block
-
-%h2 Unmatched PRs
-%table{:border => "1"}
-  %thead
-    %tr
       %th PR
       %th PR Title
       %th Issues/Milestone
@@ -50,6 +21,36 @@
                 %td
                   %a{href: issue['html_url']}= issue['number']
                 %td= issue['milestone']['title'] if issue['milestone']
+        - block = Printer.new.get_dependency(story)
+        - next if block.nil?
+        %td= block
+
+- if Planbox.has_planbox?($stories) 
+  %h2 Matched Planbox Stories
+  %table{:border => "1"}
+    %thead
+      %tr
+        %th ID
+        %th STATUS
+        %th DESCRIPTION
+        %th PROJECT NAME
+        %th PROJECT ALIAS
+        %th PR
+        %th PR TITLE
+        %th Dependencies
+    %tbody
+    - $stories.each do |story|
+      %tr
+        - break unless Planbox.has_planbox?(story)
+        %td
+          %a{href: story['pb_url']}= story['id']
+        %td= story['status']
+        %td= story['name']
+        %td= story['project_name']
+        %td= story['project_alias']
+        %td
+          %a{href: story['html_url']}= story['number']
+        %td= story['title']
         - block = Printer.new.get_dependency(story)
         - next if block.nil?
         %td= block

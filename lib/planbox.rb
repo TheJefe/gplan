@@ -74,8 +74,15 @@ module Planbox
     result_string.gsub!('`', ' ') || result_string
   end
 
-  def self.has_planbox? story
-    true unless story['name'].nil?
+  def self.has_planbox? object
+    if object.is_a?(Hash)
+      return !object['name'].nil?
+    elsif object.is_a?(Array)
+      object.each do |story|
+        return true if !story['name'].nil?
+      end
+      return false
+    end
   end
 
 end

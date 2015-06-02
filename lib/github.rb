@@ -76,7 +76,7 @@ class Github
     body = pr['body']
     # UGH, this happens when a story doesn't have any description
     return pr if body.nil?
-    regex = /(?:close|close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved|connect(?:s)?(?:ed)?\sto?)\s?+((\w*\/\w*)?#(\d+))/im
+    regex = /(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved|connect(?:s)?(?:ed)?\s(?:to)?)\s?+((\w*\/\w*)?#(\d+))/im
     linked_issues = body.scan(regex)
     return pr if linked_issues.nil?
 

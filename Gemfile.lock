@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gplan (0.1.5)
+    gplan (0.1.7)
       haml (~> 4.0)
       httparty (~> 0.13)
 

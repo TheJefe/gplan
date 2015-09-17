@@ -43,11 +43,15 @@ class DependencyTest < UnitTest
         Printer.new.get_dependency(story).must_equal dependency
       end
 
-      it 'starting with depends on' do
-        dependency = 'Depends on #123'
-        body = "This is a PR about things and dependencies\n#{dependency}\nmoar stuff"
-        story = {'body' => body}
-        Printer.new.get_dependency(story).must_equal dependency
+
+      match_words2 = %w( depends dependent depend)
+      match_words2.each do |word|
+        it "starting with #{word} on" do
+          dependency = "#{word} on #123"
+          body = "This is a PR about things and dependencies\n#{dependency}\nmoar stuff"
+          story = {'body' => body}
+          Printer.new.get_dependency(story).must_equal dependency
+        end
       end
     end
 

@@ -76,9 +76,11 @@ Note that this will include everything from the '##' to the next '##' or the end
 
 2. Does the PR contain a line that starts with "depends on"? then that line will be included
 
-  example:
+  example: All of these would get picked up as dependencies
   ```
+  Depend on #123
   Depends on #123
+  Dependent on #123
   ```
 
 3. Does the PR contain the label "Has Dependency"?

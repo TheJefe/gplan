@@ -58,7 +58,7 @@ To ouput release notes as HTML
 
 They will look something like this...
 
-![image](https://cloud.githubusercontent.com/assets/2390653/7863992/7dd34df2-052d-11e5-80ef-77c2cef5b658.png)
+![image](https://cloud.githubusercontent.com/assets/2390653/15766679/2a0d635e-290f-11e6-9697-bd377e3cc78e.png)
 
 
 ## Dependency

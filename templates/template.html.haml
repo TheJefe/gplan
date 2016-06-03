@@ -1,58 +1,64 @@
-%h2 Release notes
-%table{:border => "1"}
-  %thead
-    %tr
-      %th PR
-      %th PR Title
-      %th Issues/Milestone
-      %th Dependencies
-  %tbody
-  - $stories.each do |story|
-    - next if Planbox.has_planbox?(story)
-    %tr
-      %td
-        %a{href: story['html_url']}= story['number']
-      %td= story['title']
-      %td
-        %table
-          %tbody
-            - story['linked_issues'].each do |issue|
-              %tr
-                %td
-                  %a{href: issue['html_url']}= issue['number']
-                %td
-                  - if issue['milestone']
-                    %a{href: issue['milestone']['html_url']}= issue['milestone']['title']
-        - block = Printer.new.get_dependency(story)
-        - next if block.nil?
-        %td= block
+%head
+  %link{rel:"stylesheet", type:"text/css", href:"https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.8/semantic.min.css"}
 
-- if Planbox.has_planbox?($stories) 
-  %h2 Matched Planbox Stories
-  %table{:border => "1"}
+.container{style:"margin: 0 auto; width: 90%;"}
+  %h2.ui.header Release notes
+  %table.ui.celled.table{:border => "1"}
     %thead
       %tr
-        %th ID
-        %th STATUS
-        %th DESCRIPTION
-        %th PROJECT NAME
-        %th PROJECT ALIAS
         %th PR
-        %th PR TITLE
+        %th PR Title
+        %th Issues/Milestone
         %th Dependencies
     %tbody
     - $stories.each do |story|
+      - next if Planbox.has_planbox?(story)
       %tr
-        - break unless Planbox.has_planbox?(story)
         %td
-          %a{href: story['pb_url']}= story['id']
-        %td= story['status']
-        %td= story['name']
-        %td= story['project_name']
-        %td= story['project_alias']
+          %a.ui.orange.ribbon.label{href: story['html_url']}= story['number']
         %td
-          %a{href: story['html_url']}= story['number']
-        %td= story['title']
-        - block = Printer.new.get_dependency(story)
-        - next if block.nil?
-        %td= block
+          %h3
+            %a{href: story['html_url']}= story['title']
+        %td
+          %table
+            %tbody
+              - story['linked_issues'].each do |issue|
+                %tr
+                  %td
+                    %a.ui.button{href: issue['html_url']}= issue['number']
+                  %td
+                    - if issue['milestone']
+                      %a.ui.button{href: issue['milestone']['html_url']}= issue['milestone']['title']
+          - block = Printer.new.get_dependency(story)
+          - next if block.nil?
+          %td= block
+
+  - if Planbox.has_planbox?($stories)
+    %h2 Matched Planbox Stories
+    %table{:border => "1"}
+      %thead
+        %tr
+          %th ID
+          %th STATUS
+          %th DESCRIPTION
+          %th PROJECT NAME
+          %th PROJECT ALIAS
+          %th PR
+          %th PR TITLE
+          %th Dependencies
+      %tbody
+      - $stories.each do |story|
+        %tr
+          - break unless Planbox.has_planbox?(story)
+          %td
+            %a{href: story['pb_url']}= story['id']
+          %td= story['status']
+          %td= story['name']
+          %td= story['project_name']
+          %td= story['project_alias']
+          %td
+            %a{href: story['html_url']}= story['number']
+          %td= story['title']
+          - block = Printer.new.get_dependency(story)
+          - next if block.nil?
+          %td= block

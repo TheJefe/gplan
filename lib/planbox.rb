@@ -17,13 +17,13 @@ module Planbox
   def self.get_release_notes pb_story_ids
     return [] if pb_story_ids.empty?
     stories = get_release_notes_array pb_story_ids
-    result_string = format stories
+    format stories
   end
 
   def self.get_release_notes_array pb_story_ids
     return [] if pb_story_ids.empty?
     check_environment
-    stories = get_stories pb_story_ids
+    get_stories pb_story_ids
   end
 
   def self.login

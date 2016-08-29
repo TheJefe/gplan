@@ -15,11 +15,13 @@ module Planbox
   end
 
   def self.get_release_notes pb_story_ids
+    return [] if pb_story_ids.empty?
     stories = get_release_notes_array pb_story_ids
     result_string = format stories
   end
 
   def self.get_release_notes_array pb_story_ids
+    return [] if pb_story_ids.empty?
     check_environment
     stories = get_stories pb_story_ids
   end
@@ -51,6 +53,7 @@ module Planbox
   end
 
   def self.get_stories(array_of_pb_ids)
+    return [] if array_of_pb_ids.nil?
     login
     stories = []
     return [] unless array_of_pb_ids

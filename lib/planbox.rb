@@ -2,7 +2,7 @@ require 'httparty'
 
 PLANBOX_EMAIL=ENV['PLANBOX_EMAIL']
 PLANBOX_TOKEN=ENV['PLANBOX_TOKEN']
-PLANBOX_BASE_URL="https://www.planbox.com/api"
+PLANBOX_BASE_URL="https://work.planbox.com/api"
 
 module Planbox
   include HTTParty

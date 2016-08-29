@@ -3,8 +3,8 @@ $:.unshift lib unless $:.include?(lib)
 
 Gem::Specification.new do |s|
   s.name          = 'gplan'
-  s.version       = '0.2.0'
-  s.date          = '2016-06-02'
+  s.version       = '0.2.1'
+  s.date          = '2016-08-29'
   s.authors       = ["Jeff Koenig"]
   s.email         = 'jkoenig311@gmail.com'
   s.homepage      = 'https://github.com/thejefe/gplan'
